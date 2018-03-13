@@ -1,4 +1,3 @@
-
 var wordBank = ["blackmamba", "cottonmouth", "sidewinder"]; 
 var wins = 0; 
 var loses = 0; 
@@ -16,7 +15,7 @@ function startGame(){
     console.log('random Word = ' + randWord);
 
     underScores = [];
-    //this will also print out the picture to the page of the new random word you need to guess
+
     document.getElementById('picture').setAttribute('src', 'assets/images/'+randWord+'.jpg');
 
     for(var i = 0; i < randWord.length; i++)
@@ -33,7 +32,7 @@ function startGame(){
     correctGuesses = 0;
 
     //Need to reset all fields to fresh page
-    
+    document.getElementById('directions').innerHTML = ''
     document.getElementById('guesses-left').textContent = guessesLeft; 
     document.getElementById('wrongLetters').innerHTML = wrongLetters;
     document.getElementById('userGuesses').innerHTML = "";
@@ -68,8 +67,8 @@ document.onkeyup = function(event){
     userGuess = event.key.toLowerCase();
     keyCode = event.keyCode;
 
-    document.getElementById('directions').innerHTML = 'Press any Key to Get Started! (Hint - who is this?)'
-    //all characters are #s or key codes - 65 is a and 90 is z 
+    document.getElementById('directions').innerHTML = 'Press any key to guess'
+
     if(keyCode >= 65 && keyCode <= 90){
         //Calls function to determine if the user input is a new guess
         if(isNewGuess(userGuess)){
