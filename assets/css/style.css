@@ -1,0 +1,22 @@
+
+body{
+    background-color: tomato; 
+    text-align: center; 
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; 
+}
+
+h1{
+    font-size: 60px; 
+}
+
+.gamedirections{
+    text-align: center;
+    font-size: 25px; 
+}
+
+img{
+    width: 550px;
+    height: 600px;
+    background: #fff no-repeat;
+    border: 12px dashed #1b1a19; 
+}
