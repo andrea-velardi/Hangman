@@ -1,3 +1,4 @@
+
 var wordBank = ["blackmamba", "cottonmouth", "sidewinder"]; 
 var wins = 0; 
 var loses = 0; 
@@ -9,12 +10,14 @@ var randWord;
 var resetGame = false;
 var correctGuesses = 0; 
 
-function startGame(reset){    
+function startGame(){    
     // picks a random word 
     randWord = wordBank[Math.floor(Math.random() * wordBank.length)]; 
     console.log('random Word = ' + randWord);
 
     underScores = [];
+    //this will also print out the picture to the page of the new random word you need to guess
+    document.getElementById('picture').setAttribute('src', 'assets/images/'+randWord+'.jpg');
 
     for(var i = 0; i < randWord.length; i++)
     {
@@ -29,7 +32,8 @@ function startGame(reset){
     guessesLeft = 5;
     correctGuesses = 0;
 
-    //Need to reset all fields to "refresh" page
+    //Need to reset all fields to fresh page
+    
     document.getElementById('guesses-left').textContent = guessesLeft; 
     document.getElementById('wrongLetters').innerHTML = wrongLetters;
     document.getElementById('userGuesses').innerHTML = "";
@@ -39,14 +43,12 @@ function startGame(reset){
 
 function winLose(){
     if(correctGuesses >= randWord.length){
-        alert('Winner');
         wins++;
-        startGame();
+        document.getElementById('directions').innerHTML = 'Winner! Press enter to play again'
     }
-    else if(guessesLeft === 0){ 
-        alert('Loser'); 
+    else if(guessesLeft === 0){  
         loses++;
-        startGame();
+        document.getElementById('directions').innerHTML = 'Loser! Press enter to play again'
     }
 }
 
@@ -66,19 +68,18 @@ document.onkeyup = function(event){
     userGuess = event.key.toLowerCase();
     keyCode = event.keyCode;
 
+    document.getElementById('directions').innerHTML = 'Press any Key to Get Started! (Hint - who is this?)'
+    //all characters are #s or key codes - 65 is a and 90 is z 
     if(keyCode >= 65 && keyCode <= 90){
-        document.getElementById('userGuesses').innerHTML = userGuess
-        
+        //Calls function to determine if the user input is a new guess
         if(isNewGuess(userGuess)){
             //checking if the letter exists inside of the word
             //if it does it will do what's inside the console log    
             if(randWord.indexOf(userGuess) > -1){
                 for(var i = 0; i < randWord.length; i++){ // each user guess goes through the loop to see if the letter is correct
                     if(randWord[i] === userGuess){
-                        userGuesses.push(userGuess);
                         underScores[i] = userGuess;
                         document.getElementById('word-blanks').innerHTML = underScores.join(' ');
-                        console.log(underScores)
                         correctGuesses++;
                     }
                 }     
@@ -86,17 +87,21 @@ document.onkeyup = function(event){
             //pushing the incorrect guesses
             else {
                 wrongLetters.push(userGuess); 
-                userGuesses.push(userGuess)
                 guessesLeft--;
+                //Updating the html elements to reflect the users incorrect inputs
                 document.getElementById('guesses-left').innerHTML = guessesLeft;
                 document.getElementById('wrongLetters').innerHTML = wrongLetters.join(' , ');
-                console.log(wrongLetters); 
-            }   
+            }
+            userGuesses.push(userGuess);
+            document.getElementById('userGuesses').innerHTML = userGuesses.join(' , ') 
         } else {
-            console.log('Already guess that biatch!')
+            document.getElementById('directions').innerHTML = 'You\'ve already guessed '+userGuess;
         }
-
         winLose();
+    }
+    //Added to read an <Enter> keyboard input to reset game
+    else if(keyCode === 13) {
+        startGame();
     }
 }
 
@@ -109,4 +114,3 @@ document.onreadystatechange = function () {
         startGame()
     }
 }
-    
